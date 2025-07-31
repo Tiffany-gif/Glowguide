@@ -68,6 +68,7 @@ This application provides genuine value by helping users navigate the overwhelmi
      python -m http.server 8000
      # Then visit http://localhost:8000
      ```
+![Screenshot of GlowGuide app on http://localhost:8080](images/screenshot 3.png)
 
 ---
 
@@ -95,7 +96,7 @@ This application provides genuine value by helping users navigate the overwhelmi
    docker run -p 8080:8080 tiffanygif/glowguide:v1
    curl http://localhost:8080
    ```
-
+![Screenshot of GlowGuide app on http://localhost:8080](images/screenshot 3.png)
 3. **Push to Docker Hub**:
    ```bash
    docker login
@@ -154,6 +155,7 @@ curl http://localhost:8080
 docker ps
 docker logs glowguide-app
 ```
+![Screenshot of GlowGuide app on http://localhost:8080](images/screenshot 1.png)
 
 ### Step 3: Deploy on Web-02
 
@@ -175,6 +177,7 @@ curl http://localhost:8080
 docker ps
 docker logs glowguide-app
 ```
+![Screenshot of GlowGuide app on http://localhost:8080](images/screenshot 2.png) 
 
 ### Step 4: Configure Load Balancer
 
