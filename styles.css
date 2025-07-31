@@ -1,0 +1,144 @@
+:root {
+    --beige: #f7f3e9;
+    --dark-green: #355e3b;
+    --light-green: #5f8f67;
+    --text-dark: #333;
+    --accent: #a3c9a8;
+    --radius: 10px;
+    --transition-speed: 0.3s;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--beige);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: var(--dark-green);
+    font-size: 2.5rem;
+    margin-bottom: 0.3em;
+}
+
+header p {
+    font-size: 1.1rem;
+    color: var(--light-green);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: 600;
+}
+
+select,
+input[type="text"],
+button {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: var(--radius);
+    border: 1px solid #ccc;
+    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+select:focus,
+input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 5px var(--accent);
+    outline: none;
+}
+
+button {
+    background-color: var(--dark-green);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: var(--light-green);
+}
+
+.results-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid var(--accent);
+}
+
+.hidden {
+    display: none;
+}
+
+#routine,
+#products {
+    margin-top: 15px;
+    background-color: var(--beige);
+    padding: 15px;
+    border-radius: var(--radius);
+    border: 1px dashed var(--accent);
+}
+
+#products ul {
+    padding-left: 20px;
+}
+
+/* Error message styling */
+.error {
+    color: #d32f2f;
+    background-color: #ffebee;
+    padding: 10px;
+    border-radius: var(--radius);
+    border-left: 4px solid #d32f2f;
+    margin: 10px 0;
+}
+
+/* Loading animation */
+#loading {
+    text-align: center;
+    padding: 20px;
+}
+
+#loading p {
+    color: var(--light-green);
+    font-weight: 600;
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    select,
+    input[type="text"],
+    button {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+}

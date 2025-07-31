@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlowGuide - Skincare AI Advisor</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="config.js"></script>
+    <script defer src="script.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>GlowGuide</h1>
+            <p>Your personalized skincare AI advisor</p>
+        </header>
+
+        <section class="form-section">
+            <form id="skincare-form">
+                <label for="skinType">Select your skin type:</label>
+                <select id="skinType" required>
+                    <option value="">Choose</option>
+                    <option value="dry">Dry</option>
+                    <option value="oily">Oily</option>
+                    <option value="combination">Combination</option>
+                    <option value="sensitive">Sensitive</option>
+                </select>
+
+                <label for="concerns">What are your skin concerns?</label>
+                <input type="text" id="concerns" placeholder="e.g., acne, dryness, wrinkles" required />
+
+                <label for="location">Enter your location:</label>
+                <input type="text" id="location" placeholder="e.g., Kigali, Rwanda" required />
+
+                <button type="submit">Get Recommendations</button>
+            </form>
+        </section>
+
+        <section id="loading" class="hidden">
+            <p>Fetching your personalized routine...</p>
+        </section>
+
+        <section id="results" class="results-section hidden">
+            <h2>Your AI-Powered Skincare Routine</h2>
+            <div id="routine"></div>
+            <h3>Recommended Products</h3>
+            <div id="products"></div>
+            <h3>Dermatology Centers In Kigali</h3>
+            <div id="dermatologists"></div>
+        </section>
+    </div>
+</body>
+
+</html>
