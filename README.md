@@ -2,7 +2,7 @@
 
 A personalized skincare recommendation web application that provides customized routines, product recommendations, and dermatologist suggestions based on user input. This application serves a genuine purpose by helping users create personalized skincare routines tailored to their specific skin type and concerns.
 
-## 🎯 **Application Purpose & Value**
+## **Application Purpose & Value**
 
 GlowGuide addresses a real need in the skincare industry by providing:
 - **Personalized Skincare Routines**: AI-generated routines based on skin type and concerns
@@ -63,12 +63,6 @@ This application provides genuine value by helping users navigate the overwhelmi
 
 3. **Run locally**:
    - Open `glowguide.html` in your web browser
-   - Or use a local server:
-     ```bash
-     python -m http.server 8000
-     # Then visit http://localhost:8000
-     ```
-![Screenshot of GlowGuide app on http://localhost:8080](images/screenshot 3.png)
 
 ---
 
@@ -76,15 +70,14 @@ This application provides genuine value by helping users navigate the overwhelmi
 
 | Server   | IP Address      | Role           | Port |
 |----------|------------------|----------------|------|
-| Web01    | 172.20.0.11      | Static Web App | 8080 |
-| Web02    | 172.20.0.12      | Static Web App | 8080 |
-| Lb01     | 172.20.0.10      | Load Balancer  | 8082 |
+| Web01    | 40.89.191.190      | Static Web App | 8080 |
+| Web02    | 172.189.157.7      | Static Web App | 8080 |
+| Lb01     | 4.233.58.81     | Load Balancer  | 8082 |
 
 ---
 
 ## **Docker Deployment**
 
-### Build Instructions
 
 1. **Build the Docker image**:
    ```bash
@@ -96,7 +89,8 @@ This application provides genuine value by helping users navigate the overwhelmi
    docker run -p 8080:8080 tiffanygif/glowguide:v1
    curl http://localhost:8080
    ```
-![Screenshot of GlowGuide app on http://localhost:8080](images/screenshot 3.png)
+![Screenshot of GlowGuide app on http://localhost:8080](images/Screenshot 3.png)
+
 3. **Push to Docker Hub**:
    ```bash
    docker login
@@ -122,70 +116,55 @@ This application provides genuine value by helping users navigate the overwhelmi
 Replace `your-dockerhub-username` with your actual Docker Hub username:
 
 ```bash
-# Build the image locally
+
 docker build -t glowguide:v1 .
 
-# Tag with your Docker Hub username
 docker tag glowguide:v1 tiffanygif/glowguide:v1
 
-# Login to Docker Hub
 docker login
 
-# Push to Docker Hub
 docker push tiffanygif/glowguide:v1
 ```
 
 ### Step 2: Deploy on Web-01
 
 ```bash
-# SSH into web-01
 ssh user@web-01
 
-# Pull your image
 docker pull tiffanygif/glowguide:v1
 
-# Run the container
 docker run -d --name glowguide-app --restart unless-stopped \
   -p 8080:8080 tiffanygif/glowguide:v1
 
-# Verify it's running
 curl http://localhost:8080
 
-# Check container status
 docker ps
 docker logs glowguide-app
 ```
-![Screenshot of GlowGuide app on http://localhost:8080](images/screenshot 1.png)
 
 ### Step 3: Deploy on Web-02
 
 ```bash
-# SSH into web-02
-ssh user@web-02
+ssh azureuser@wweb-01
 
-# Pull your image
 docker pull tiffanygif/glowguide:v1
 
-# Run the container
 docker run -d --name glowguide-app --restart unless-stopped \
   -p 8080:8080 tiffanygif/glowguide:v1
 
-# Verify it's running
 curl http://localhost:8080
 
-# Check container status
 docker ps
 docker logs glowguide-app
 ```
-![Screenshot of GlowGuide app on http://localhost:8080](images/screenshot 2.png) 
+
+![Screenshot of web01 container](images/web01.png) 
 
 ### Step 4: Configure Load Balancer
 
 ```bash
-# SSH into lb-01
-ssh user@lb-01
+ssh azureuser@lb-01
 
-# Edit the HAProxy configuration
 sudo nano /etc/haproxy/haproxy.cfg
 ```
 
@@ -215,10 +194,8 @@ backend webapps
 Reload HAProxy:
 
 ```bash
-# Reload HAProxy configuration
 docker exec -it lb-01 sh -c 'haproxy -sf $(pidof haproxy) -f /etc/haproxy/haproxy.cfg'
 
-# Verify configuration
 docker exec -it lb-01 haproxy -c -f /etc/haproxy/haproxy.cfg
 ```
 
@@ -226,17 +203,9 @@ docker exec -it lb-01 haproxy -c -f /etc/haproxy/haproxy.cfg
 
 #### Test Individual Servers:
 ```bash
-# Test web-01
-curl http://web-01:8080
+curl http://40.89.191.190:8080
 
-# Test web-02
-curl http://web-02:8080
-```
-
-#### Verify Health Checks:
-```bash
-# Check if both servers are healthy
-curl http://localhost/health
+curl http://172.189.157.7:8080
 ```
 
 ### Step 6: Verify End-to-End Functionality
@@ -247,9 +216,8 @@ curl http://localhost/health
 4. **Monitor logs**: Check container logs for any errors
 
 ```bash
-# Check container logs on both servers
-ssh user@web-01 "docker logs glowguide"
-ssh user@web-02 "docker logs glowguide"
+ssh azureuser@web-01 "docker logs glowguide"
+ssh azureuser@web-02 "docker logs glowguide"
 ```
 
 ## **Security Considerations**
@@ -287,7 +255,6 @@ ssh user@web-02 "docker logs glowguide"
 
 2. **Load Balancer Test**:
    ```bash
-   # Check if requests alternate between servers
    curl -I http://localhost
    ```
 
@@ -331,19 +298,17 @@ ssh user@web-02 "docker logs glowguide"
 
 4. **Load balancer not working**:
    ```bash
-   # Check HAProxy status
    docker exec -it lb-01 haproxy -c -f /etc/haproxy/haproxy.cfg
    
-   # Check backend health
    docker exec -it lb-01 haproxy -c -f /etc/haproxy/haproxy.cfg | grep -A 10 "backend webapps"
    ```
 
 5. **SSH connection issues**:
    ```bash
    # Verify SSH access
-   ssh -o ConnectTimeout=10 user@web-01
-   ssh -o ConnectTimeout=10 user@web-02
-   ssh -o ConnectTimeout=10 user@lb-01
+   ssh -o ConnectTimeout=10 azureuser@web-01
+   ssh -o ConnectTimeout=10 azureuser@web-02
+   ssh -o ConnectTimeout=10 azureuser@lb-01
    ```
 
 6. **Docker pull fails**:
@@ -387,22 +352,9 @@ ssh user@web-02 "docker logs glowguide"
 
 ### APIs Used
 - **OpenAI API**: [RapidAPI OpenAI](https://rapidapi.com/open-ai21-open-ai21-default/api/openai-api/)
-- **Sephora API**: [RapidAPI Sephora](https://rapidapi.com/apimaster/api/sephora/)
-- **Google Places API**: [RapidAPI Google Places](https://rapidapi.com/googleapis/api/google-maps-places/)
 
 ### Technologies Used
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
 - **Containerization**: Docker, Nginx
 - **Load Balancing**: HAProxy
 - **Deployment**: Docker Hub, Linux containers
-
-### Learning Resources
-- [Docker Documentation](https://docs.docker.com/)
-- [HAProxy Documentation](https://www.haproxy.org/download/2.4/doc/intro.txt)
-- [RapidAPI Documentation](https://rapidapi.com/docs)
-
-## **License**
-
-This project is open source and available under the MIT License.
-
----
