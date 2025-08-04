@@ -285,25 +285,20 @@ ssh azureuser@web-02 "docker logs glowguide"
    - Verify RapidAPI subscription status
    - Check network connectivity
 
-2. **"No dermatologists found"**:
-   - Try different location names
-   - Check API quota limits
-   - Verify Google Places API configuration
-
-3. **Container won't start**:
+2. **Container won't start**:
    ```bash
    docker logs glowguide-app
    docker exec -it glowguide-app nginx -t
    ```
 
-4. **Load balancer not working**:
+3. **Load balancer not working**:
    ```bash
    docker exec -it lb-01 haproxy -c -f /etc/haproxy/haproxy.cfg
    
    docker exec -it lb-01 haproxy -c -f /etc/haproxy/haproxy.cfg | grep -A 10 "backend webapps"
    ```
 
-5. **SSH connection issues**:
+4. **SSH connection issues**:
    ```bash
    # Verify SSH access
    ssh -o ConnectTimeout=10 azureuser@web-01
@@ -311,7 +306,7 @@ ssh azureuser@web-02 "docker logs glowguide"
    ssh -o ConnectTimeout=10 azureuser@lb-01
    ```
 
-6. **Docker pull fails**:
+5. **Docker pull fails**:
    ```bash
    # Check Docker Hub login
    docker login
