@@ -89,7 +89,7 @@ This application provides genuine value by helping users navigate the overwhelmi
    docker run -p 8080:8080 tiffanygif/glowguide:v1
    curl http://localhost:8080
    ```
-![Screenshot of GlowGuide app on http://localhost:8080](images/Screenshot 3.png)
+![Screenshot of GlowGuide app on http://localhost:8080](images/Screenshot3.png)
 
 3. **Push to Docker Hub**:
    ```bash
